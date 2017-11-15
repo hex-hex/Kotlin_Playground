@@ -5,8 +5,7 @@ tailrec fun generateCode(seed: Long,x: String =
 DecimalFormat("#0000")
         .format(Random(seed)
                 .nextInt(10000))): String =
-        if (
-        (2..3)
+        if ((2..3)
                 .toList()
                 .associate{Pair(it,(0..4-it).toList())}
                 .mapValues{
@@ -17,11 +16,10 @@ DecimalFormat("#0000")
                     }
                 }
                 .map {
-                    it.value.partition { 0.0 == it.average() - it[1] }
-                            .first.any { it[0] == it[1] || Math.abs(it[0]-it[1]) == 1 }
+                    it.value.filter { 0.0 == it.average() - it[1] }
+                            .any { it[0] == it[1] || Math.abs(it[0]-it[1]) == 1 }
                 }.all { !it }
                 ) x else generateCode(seed + Date().time)
-
 
 fun main(args: Array<String>) {
     val codeList = (1L..100).toList()
